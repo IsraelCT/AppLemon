@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.applemon.ui.theme.AppLemonTheme
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +49,17 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppLemon() {
     var currentStep by remember { mutableStateOf(1) }
+    var stepState by remember { mutableStateOf(0) }
+    var contador by remember { mutableStateOf(0) }
+
+    //Usamos el contador en 0 para que el ciclo vuelva iniciar
+    when(currentStep){
+
+        2 ->{ stepState = Random.nextInt(1,5)
+        contador = 0
+        }
+
+    }
     var imageResource = when (currentStep) {
         1 -> Column(
             modifier = Modifier.fillMaxSize(),
@@ -76,7 +88,12 @@ fun AppLemon() {
                 contentDescription = null,
                 modifier = Modifier
                     .wrapContentSize()
-                    .clickable { currentStep = 3 })
+                    .clickable {
+                        contador++
+                        if (contador >= stepState){
+                        currentStep = 3
+                    }
+                    })
 
         }
 
